@@ -16,5 +16,10 @@ module.exports = {
     sourceType: "module",
     tsconfigRootDir: __dirname,
   },
-  rules: {},
+  rules: {
+    "testing-library/no-render-in-setup": [
+      "error",
+      { allowTestingFrameworkSetupHook: "beforeEach" },
+    ],
+  },
 };
