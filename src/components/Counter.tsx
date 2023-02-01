@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 export default function Counter({
   description,
@@ -9,6 +9,18 @@ export default function Counter({
 }) {
   const [count, setCount] = useState(defaultCount);
   const [incremrntor, setIncremrntor] = useState(1);
+  const [bigEngough, setBigEngough] = useState(defaultCount >= 15);
+
+  useEffect(() => {
+    let id: NodeJS.Timeout;
+    if (count >= 15) {
+      id = setTimeout(() => {
+        setBigEngough(true);
+      }, 300);
+    }
+
+    return () => clearTimeout(id);
+  });
 
   return (
     <>
@@ -28,9 +40,14 @@ export default function Counter({
       >
         +
       </button>
-      <button aria-label="subtract counter" onClick={() => setCount(count - 1)}>
+      <button
+        aria-label="subtract counter"
+        onClick={() => setTimeout(() => setCount(count - 1), 200)}
+      >
         -
       </button>
+
+      {!bigEngough && <div> too small</div>}
     </>
   );
 }
